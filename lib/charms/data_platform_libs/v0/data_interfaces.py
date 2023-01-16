@@ -1053,6 +1053,12 @@ class KafkaRequires(DataRequires):
             else {"topic": self.topic},
         )
 
+        relation = self.charm.model.get_relation(self.relation_name, event.relation.id)
+        data = relation.data[self.local_app].items()
+
+        logger.info(f"APP: {self.local_app}")
+        logger.info(f"My data: {data}")
+
     def _on_relation_changed_event(self, event: RelationChangedEvent) -> None:
         """Event emitted when the Kafka relation has changed."""
         # Check which data has changed to emit customs events.
@@ -1063,6 +1069,7 @@ class KafkaRequires(DataRequires):
         if "username" in diff.added and "password" in diff.added:
             # Emit the default event (the one without an alias).
             logger.info("topic created at %s", datetime.now())
+            logger.info(f"APP relation changed: {event.app} Unit relation changed: {event.unit}")
             self.on.topic_created.emit(event.relation, app=event.app, unit=event.unit)
 
             # To avoid unnecessary application restarts do not trigger

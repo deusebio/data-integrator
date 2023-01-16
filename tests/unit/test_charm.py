@@ -60,9 +60,9 @@ class TestCharm(unittest.TestCase):
             ),
         )
         self.assertEqual(self.harness.charm.config["database-name"], "foo")
-        self.assertEqual(self.harness.charm.mysql.database, "foo")
-        self.assertEqual(self.harness.charm.postgresql.database, "foo")
-        self.assertEqual(self.harness.charm.mongodb.database, "foo")
+        self.assertEqual(self.harness.charm.mysql.database_name, "foo")
+        self.assertEqual(self.harness.charm.postgresql.database_name, "foo")
+        self.assertEqual(self.harness.charm.mongodb.database_name, "foo")
 
         self.harness.update_config({"database-name": "foo1"})
         self.harness.charm._on_config_changed(Mock())
@@ -74,9 +74,9 @@ class TestCharm(unittest.TestCase):
         )
 
         self.assertEqual(self.harness.charm.config["database-name"], "foo1")
-        self.assertEqual(self.harness.charm.mysql.database, "foo1")
-        self.assertEqual(self.harness.charm.postgresql.database, "foo1")
-        self.assertEqual(self.harness.charm.mongodb.database, "foo1")
+        self.assertEqual(self.harness.charm.mysql.database_name, "foo1")
+        self.assertEqual(self.harness.charm.postgresql.database_name, "foo1")
+        self.assertEqual(self.harness.charm.mongodb.database_name, "foo1")
 
         self.harness.update_config({"topic-name": "bar"})
         self.harness.charm._on_config_changed(Mock())
@@ -87,7 +87,7 @@ class TestCharm(unittest.TestCase):
             ),
         )
         self.assertEqual(self.harness.charm.config["topic-name"], "bar")
-        self.assertEqual(self.harness.charm.kafka.topic, "bar")
+        self.assertEqual(self.harness.charm.kafka.topic_name, "bar")
 
         self.harness.update_config({"extra-user-roles": "admin"})
         self.harness.charm._on_config_changed(Mock())
